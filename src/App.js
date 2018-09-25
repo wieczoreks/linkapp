@@ -3,7 +3,7 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import loadingGif from './loading.gif';
 import './App.css';
-
+import SearchBox from "./Searchbox.js"
 import ListItem from './ListItem';
 
 class App extends Component {
@@ -11,11 +11,13 @@ class App extends Component {
     super();
     this.state = {
       newTodo: '',
+      searchEntry:'',
       editing: false,
       editingIndex: null,
       notification: null,
       todos: [],
-      loading: true
+      pages:[],
+      loading: true,
     };
 
     this.apiUrl = 'https://5ba4f4fa328ae60014f30635.mockapi.io';
@@ -25,6 +27,7 @@ class App extends Component {
     this.updateTodo = this.updateTodo.bind(this);
     this.deleteTodo = this.deleteTodo.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleSearch = this.handleSearch.bind(this);
   }
 
   async componentDidMount() {
@@ -32,15 +35,34 @@ class App extends Component {
     setTimeout(() => {
       this.setState({
         todos: response.data,
-        loading: false
+        loading: false,
+        pages:response.data
       });
     }, 1000);
+    const options = { crossdomain: true };
+    const response1 = fetch("https://new.abb.com", options)
+    .then(resp=>{
+      return resp.text()
+    })
+    .then(data=>{
+      console.log(data)
+    })
+    console.log(response1)
   }
 
   handleChange(event) {
     this.setState({
-      newTodo: event.target.value
+      newTodo: event.target.value,
+
     });
+  }
+
+  handleSearch(event) {    
+    this.setState({
+      searchEntry: event.target.value,
+    });
+    
+  
   }
 
   async addTodo() {
@@ -81,7 +103,8 @@ class App extends Component {
       todos,
       editing: false,
       editingIndex: null,
-      newTodo: ''
+      newTodo: '',
+      
     });
     this.alert('Todo updated successfully.');
   }
@@ -110,11 +133,24 @@ class App extends Component {
   }
 
   render() {
+
+    const filteredPages = this.state.todos.filter(page=>{
+      return page.name.toLowerCase().includes(this.state.searchEntry.toLowerCase());
+    })
+
     return (
       <div className="App">
         <header className="App-header">
+          <SearchBox 
+          handleSearch={this.handleSearch} 
+          searchEntry={this.state.searchEntry}
+          />
+          <div>
           <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">CRUD React</h1>
+          <h1 className="App-title">BLANK PAGE CHECKER</h1>
+          </div>
+          
+          
         </header>
         <div className="container">
           {
@@ -145,7 +181,7 @@ class App extends Component {
           {
             (!this.state.editing || this.state.loading) &&
             <ul className="list-group">
-              {this.state.todos.map((item, index) => {
+              {filteredPages.map((item, index) => {
                 return <ListItem
                   key={item.id}
                   item={item}
