@@ -5,6 +5,7 @@ import loadingGif from './loading.gif';
 import './App.css';
 import SearchBox from "./Searchbox.js"
 import ListItem from './ListItem';
+import "tachyons";
 
 class App extends Component {
   constructor() {
@@ -39,8 +40,10 @@ class App extends Component {
         pages:response.data
       });
     }, 1000);
-    const options = { crossdomain: true };
-    const response1 = fetch("https://new.abb.com", options)
+    var requestOptions = { method: 'GET',
+                       mode: 'no-cors',
+               cache: 'default' };
+    const response1 = fetch("http://new.abb.com/grid", requestOptions)
     .then(resp=>{
       return resp.text()
     })
@@ -159,6 +162,7 @@ class App extends Component {
               <p className="text-center">{this.state.notification}</p>
             </div>
           }
+          
           <input
             type="text"
             name="todo"
@@ -183,6 +187,7 @@ class App extends Component {
             <ul className="list-group">
               {filteredPages.map((item, index) => {
                 return <ListItem
+                  
                   key={item.id}
                   item={item}
                   editTodo={() => { this.editTodo(index); }}
