@@ -3,26 +3,36 @@
 }
 h1 {
   font-family: 'SEGA LOGO FONT';
-  color:rgb(0, 162, 255)
+  color:#ff000f
 }
-
-
-.App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+.Logo{
+  display:inline
 }
 
 .App-header {
-  background-color: #222;
-  height: 200px;
+  border:1px solid black;
+  height: 350px;
   padding: 20px;
   color: white;
   display:flex;
   justify-content: center;
   align-items: center;
-  flex-flow: column nowrap
+  flex-flow: column nowrap;
+  overflow: visible;
+
+}
+ul {
+  width:100%
 }
 
+.particles {
+  position:fixed;
+  top:0;
+  right:0;
+  bottom: 0;
+  left:0;
+  z-index:-1;
+}
 .App-title {
   font-size: 1.5em;
 }
@@ -31,11 +41,6 @@ h1 {
   font-size: large;
 }
 
-
-@keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-}
 @font-face {
   font-family: 'SEGA LOGO FONT';
   font-style: normal;

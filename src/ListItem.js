@@ -2,7 +2,7 @@ import React from 'react';
 import "./List.css";
 
 const ListItem = (props) => {
-  return <li className="list-group-item liClass bg-light-grey br3 ma2 grow">
+  return <li className="liClass grow shadow-1">
 
     <a className="black" href={props.item.name}>{props.item.name}</a>
     <div><button

@@ -1,0 +1,6 @@
+nav {
+    display:flex;
+    justify-content:space-between;
+    font-family: 'SEGA LOGO FONT';
+    color:#ff000f
+}

@@ -1,11 +1,16 @@
 import axios from 'axios';
 import React, { Component } from 'react';
-import logo from './logo.svg';
 import loadingGif from './loading.gif';
 import './App.css';
 import SearchBox from "./Searchbox.js"
-import ListItem from './ListItem';
-import "tachyons";
+import PageList from './PageList';
+import Alert from "./Alert.js";
+import Scroll from "./Scroll";
+import cheerio from "cheerio";
+import Particles from 'react-particles-js';
+import particlesOptions from "./ParticleOptions.js";
+import Navigation from "./components/Navigation/Navigation";
+import Logo from "./components/Logo/Logo";
 
 class App extends Component {
   constructor() {
@@ -29,6 +34,7 @@ class App extends Component {
     this.deleteTodo = this.deleteTodo.bind(this);
     this.handleChange = this.handleChange.bind(this);
     this.handleSearch = this.handleSearch.bind(this);
+    this.editTodo = this.editTodo.bind(this);
   }
 
   async componentDidMount() {
@@ -40,23 +46,18 @@ class App extends Component {
         pages:response.data
       });
     }, 1000);
-    var requestOptions = { method: 'GET',
-                       mode: 'no-cors',
-               cache: 'default' };
-    const response1 = fetch("http://new.abb.com/grid", requestOptions)
-    .then(resp=>{
-      return resp.text()
-    })
-    .then(data=>{
-      console.log(data)
-    })
-    console.log(response1)
+   
+    var options = {
+      uri: 'https://new.abb.com/seb-test',
+      transform: function (body) {
+          return cheerio.load(body);
+      }, 
+  };
   }
 
   handleChange(event) {
     this.setState({
       newTodo: event.target.value,
-
     });
   }
 
@@ -136,65 +137,60 @@ class App extends Component {
   }
 
   render() {
-
+ 
     const filteredPages = this.state.todos.filter(page=>{
       return page.name.toLowerCase().includes(this.state.searchEntry.toLowerCase());
     })
 
     return (
       <div className="App">
-        <header className="App-header">
-          <SearchBox 
-          handleSearch={this.handleSearch} 
-          searchEntry={this.state.searchEntry}
-          />
-          <div>
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">BLANK PAGE CHECKER</h1>
-          </div>
-          
-          
-        </header>
+       
         <div className="container">
-          {
-            this.state.notification &&
-            <div className="alert mt-3 alert-success">
-              <p className="text-center">{this.state.notification}</p>
-            </div>
-          }
+            <Particles 
+              className='particles'
+              params={particlesOptions}
+            />
+            <Navigation />
+            
+            <header className="App-header shadow-2 mb3 mt0">
+              <h1 className="App-title">BLANK PAGE CHECKER FOR ABB.COM</h1>
           
-          <input
-            type="text"
-            name="todo"
-            className="my-4 form-control"
-            placeholder="Add a new todo"
-            onChange={this.handleChange}
-            value={this.state.newTodo}
-          />
-          <button
-            onClick={this.state.editing ? this.updateTodo : this.addTodo}
-            className="btn-success mb-3 form-control"
-            disabled={this.state.newTodo.length < 5}
-          >
-            {this.state.editing ? 'Update todo' : 'Add todo'}
-          </button>
+              <SearchBox 
+              handleSearch={this.handleSearch} 
+              searchEntry={this.state.searchEntry}
+              />
+                        
+              <input
+                type="text"
+                name="todo"
+                className="my-4 form-control"
+                placeholder="Add new page"
+                onChange={this.handleChange}
+                value={this.state.newTodo}
+              />
+              <button
+                onClick={this.state.editing ? this.updateTodo : this.addTodo}
+                className="btn-info mb-3 form-control"
+                disabled={this.state.newTodo.length < 5}
+              >
+                {this.state.editing ? 'Update todo' : 'Add todo'}
+              </button>
+            </header>
+          <Alert notification={this.state.notification}/>
+        
           {
             this.state.loading &&
             <img src={loadingGif} alt=""/>
           }
           {
             (!this.state.editing || this.state.loading) &&
-            <ul className="list-group">
-              {filteredPages.map((item, index) => {
-                return <ListItem
-                  
-                  key={item.id}
-                  item={item}
-                  editTodo={() => { this.editTodo(index); }}
-                  deleteTodo={() => { this.deleteTodo(index); }}
-                />;
-              })}
-            </ul>
+            <Scroll>
+              <PageList 
+              todos={filteredPages}
+              editTodo={this.editTodo} 
+              deleteTodo={this.deleteTodo}
+              />
+            </Scroll>
           }
         </div>
       </div>
