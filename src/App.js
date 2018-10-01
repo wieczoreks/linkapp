@@ -10,7 +10,7 @@ import cheerio from "cheerio";
 import Particles from 'react-particles-js';
 import particlesOptions from "./ParticleOptions.js";
 import Navigation from "./components/Navigation/Navigation";
-import Logo from "./components/Logo/Logo";
+import Signin from "./components/Signin/Signin";
 
 class App extends Component {
   constructor() {
@@ -24,6 +24,7 @@ class App extends Component {
       todos: [],
       pages:[],
       loading: true,
+      route:'sigin'
     };
 
     this.apiUrl = 'https://5ba4f4fa328ae60014f30635.mockapi.io';
@@ -145,15 +146,17 @@ class App extends Component {
     return (
       <div className="App">
        
-        <div className="container">
+        
             <Particles 
               className='particles'
               params={particlesOptions}
             />
-            <Navigation />
             
+            {this.state.route==="sigin"?<Signin className="Signin"/>:
+          <div>
+            <Navigation />
             <header className="App-header shadow-2 mv2 mt0">
-              <h1 className="App-title">BLANK PAGE CHECKER FOR ABB.COM</h1>
+              <h1 className="App-title">BLANK PAGE CHECKER</h1>
           
               <SearchBox 
               handleSearch={this.handleSearch} 
@@ -192,7 +195,11 @@ class App extends Component {
               />
             </Scroll>
           }
-        </div>
+          </div>
+          }
+            
+            
+        
       </div>
     );
   }

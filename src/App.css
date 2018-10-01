@@ -1,10 +1,24 @@
-.App {
-  text-align: center;
-}
 h1 {
   font-family: 'SEGA LOGO FONT';
   color:#ff000f
 }
+ul {
+  width:100%
+
+}
+
+.App {
+  text-align: center;
+  z-index: -1;
+  display:flex;
+  align-items: center;
+  justify-content: center;
+  height:100vh;
+}
+.Signin {
+  z-index:-1 ;
+}
+
 .Logo{
   display:inline
 }
@@ -21,9 +35,6 @@ h1 {
   overflow: visible;
 
 }
-ul {
-  width:100%
-}
 
 .particles {
   position:fixed;
@@ -33,13 +44,7 @@ ul {
   left:0;
   z-index:-1;
 }
-.App-title {
-  font-size: 1.5em;
-}
 
-.App-intro {
-  font-size: large;
-}
 
 @font-face {
   font-family: 'SEGA LOGO FONT';
