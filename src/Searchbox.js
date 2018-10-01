@@ -5,7 +5,7 @@ const SearchBox = (props) => {
 return (
 
  <input 
-    className="my-4 form-control" 
+    className="mv2 form-control" 
     type="search" 
     name="search"
     placeholder="Search page"

@@ -152,7 +152,7 @@ class App extends Component {
             />
             <Navigation />
             
-            <header className="App-header shadow-2 mb3 mt0">
+            <header className="App-header shadow-2 mv2 mt0">
               <h1 className="App-title">BLANK PAGE CHECKER FOR ABB.COM</h1>
           
               <SearchBox 
@@ -163,17 +163,17 @@ class App extends Component {
               <input
                 type="text"
                 name="todo"
-                className="my-4 form-control"
+                className="mv2 form-control"
                 placeholder="Add new page"
                 onChange={this.handleChange}
                 value={this.state.newTodo}
               />
               <button
                 onClick={this.state.editing ? this.updateTodo : this.addTodo}
-                className="btn-info mb-3 form-control"
+                className="btn-info form-control mv2"
                 disabled={this.state.newTodo.length < 5}
               >
-                {this.state.editing ? 'Update todo' : 'Add todo'}
+                {this.state.editing ? 'Update page' : 'Add page'}
               </button>
             </header>
           <Alert notification={this.state.notification}/>
