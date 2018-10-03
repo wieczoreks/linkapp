@@ -22,7 +22,7 @@ class App extends Component {
       notification: null,
       todos: [],
       loading: true,
-      route:'home',
+      route:'sigin',
       
     };
 
@@ -35,7 +35,7 @@ class App extends Component {
     
     this.alert = this.alert.bind(this)
   }
-
+  
   async componentDidMount() {
     const response = await axios.get(`${this.apiUrl}/todos`);
     setTimeout(() => {
