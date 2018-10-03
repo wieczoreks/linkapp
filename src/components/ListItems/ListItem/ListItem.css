@@ -3,13 +3,11 @@
     flex-flow: row wrap;
     justify-content: space-between;
     align-items: center;
-    width:95%;
-    margin:5px auto;
+    width:100%;
+    margin:6px auto;
     padding:4px
 }
 a {
-padding:3px
+padding:3px;
 }
-button {
-    margin: 2px
-}
+

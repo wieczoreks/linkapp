@@ -3,16 +3,19 @@ import React from 'react';
 const SearchBox = (props) => {
  
 return (
+<div className="mv3">
 
+<label className="db fw6  f5" >SearchBox</label>
  <input 
-    className="mv2 form-control" 
+    className="pa2 ba bg-transparent hover-bg-black hover-white w-100"
     type="search" 
-    name="search"
+    name="SearchBox"
     placeholder="Search page"
     onChange={props.handleSearch}
     value={props.searchEntry}
+    
  />
-
+</div>
 );
 }
  

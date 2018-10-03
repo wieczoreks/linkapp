@@ -2,15 +2,14 @@ import axios from 'axios';
 import React, { Component } from 'react';
 import loadingGif from './loading.gif';
 import './App.css';
-import SearchBox from "./Searchbox.js"
-import PageList from './PageList';
-import Alert from "./Alert.js";
-import Scroll from "./Scroll";
-import cheerio from "cheerio";
+import PageList from './components/ListItems/PageList';
+import Alert from "./components/Alert/Alert";
+import Scroll from "./components/Scroll/Scroll";
 import Particles from 'react-particles-js';
 import particlesOptions from "./ParticleOptions.js";
 import Navigation from "./components/Navigation/Navigation";
 import Signin from "./components/Signin/Signin";
+import Header from "./components/Header/Header"
 
 class App extends Component {
   constructor() {
@@ -22,20 +21,19 @@ class App extends Component {
       editingIndex: null,
       notification: null,
       todos: [],
-      pages:[],
       loading: true,
-      route:'sigin'
+      route:'home',
+      
     };
 
     this.apiUrl = 'https://5ba4f4fa328ae60014f30635.mockapi.io';
-
-    this.alert = this.alert.bind(this);
+    this.deleteTodo = this.deleteTodo.bind(this);
     this.addTodo = this.addTodo.bind(this);
     this.updateTodo = this.updateTodo.bind(this);
-    this.deleteTodo = this.deleteTodo.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSearch = this.handleSearch.bind(this);
-    this.editTodo = this.editTodo.bind(this);
+    this.handleChange=this.handleChange.bind(this);
+    this.handleSearch=this.handleSearch.bind(this);
+    
+    this.alert = this.alert.bind(this)
   }
 
   async componentDidMount() {
@@ -44,16 +42,9 @@ class App extends Component {
       this.setState({
         todos: response.data,
         loading: false,
-        pages:response.data
+        
       });
     }, 1000);
-   
-    var options = {
-      uri: 'https://new.abb.com/seb-test',
-      transform: function (body) {
-          return cheerio.load(body);
-      }, 
-  };
   }
 
   handleChange(event) {
@@ -62,15 +53,15 @@ class App extends Component {
     });
   }
 
-  handleSearch(event) {    
+  handleSearch(event){    
     this.setState({
-      searchEntry: event.target.value,
+      searchEntry: event.target.value
     });
     
   
   }
 
-  async addTodo() {
+async addTodo () {
 
     const response = await axios.post(`${this.apiUrl}/todos`, {
       name: this.state.newTodo
@@ -84,11 +75,16 @@ class App extends Component {
       todos: todos,
       newTodo: ''
     });
-    this.alert('Todo added successfully.');
+    this.alert('Page added successfully.');
   }
 
-  editTodo(index) {
+  editTodo =(item) =>{
+    const todos = this.state.todos;
+    const index = todos.indexOf(item);
+
     const todo = this.state.todos[index];
+    
+    
     this.setState({
       editing: true,
       newTodo: todo.name,
@@ -96,9 +92,8 @@ class App extends Component {
     });
   }
 
-  async updateTodo() {
+async updateTodo () {
     const todo = this.state.todos[this.state.editingIndex];
-
     const response = await axios.put(`${this.apiUrl}/todos/${todo.id}`, {
       name: this.state.newTodo
     });
@@ -109,12 +104,12 @@ class App extends Component {
       editing: false,
       editingIndex: null,
       newTodo: '',
-      
+      searchEntry:''
     });
-    this.alert('Todo updated successfully.');
+    this.alert('Page updated successfully.');
   }
 
-  alert(notification) {
+alert (notification) {
     this.setState({
       notification
     });
@@ -126,16 +121,20 @@ class App extends Component {
     }, 2000);
   }
 
-  async deleteTodo(index) {
+async deleteTodo(item) {
     const todos = this.state.todos;
+    const index = todos.indexOf(item);
     const todo = todos[index];
-
     await axios.delete(`${this.apiUrl}/todos/${todo.id}`);
     delete todos[index];
-
     this.setState({ todos });
-    this.alert('Todo deleted successfully.');
+    this.alert(`${todo.name} deleted successfully.`);
   }
+
+onRouteChange = () => {
+    this.setState({route:"home"})
+}
+
 
   render() {
  
@@ -145,61 +144,40 @@ class App extends Component {
 
     return (
       <div className="App">
-       
-        
-            <Particles 
-              className='particles'
-              params={particlesOptions}
+            <Particles className='particles' params={particlesOptions}
             />
-            
-            {this.state.route==="sigin"?<Signin className="Signin"/>:
-          <div>
-            <Navigation />
-            <header className="App-header shadow-2 mv2 mt0">
-              <h1 className="App-title">BLANK PAGE CHECKER</h1>
-          
-              <SearchBox 
-              handleSearch={this.handleSearch} 
-              searchEntry={this.state.searchEntry}
-              />
-                        
-              <input
-                type="text"
-                name="todo"
-                className="mv2 form-control"
-                placeholder="Add new page"
-                onChange={this.handleChange}
-                value={this.state.newTodo}
-              />
-              <button
-                onClick={this.state.editing ? this.updateTodo : this.addTodo}
-                className="btn-info form-control mv2"
-                disabled={this.state.newTodo.length < 5}
-              >
-                {this.state.editing ? 'Update page' : 'Add page'}
-              </button>
-            </header>
-          <Alert notification={this.state.notification}/>
-        
-          {
-            this.state.loading &&
-            <img src={loadingGif} alt=""/>
-          }
-          {
+            {this.state.route==="sigin" ? 
+            <Signin onRouteChange = {this.onRouteChange}/>:
+            <div className="">
+                <Navigation />
+                <Header
+                handleChange={this.handleChange}
+                handleSearch={this.handleSearch}
+                newTodo={this.state.newTodo}
+                editing = {this.state.editing}
+                updateTodo = {this.updateTodo}
+                addTodo = {this.addTodo}
+                searchEntry={this.state.searchEntry}
+                 />   
+            <Alert notification={this.state.notification}/>
+            {
+                this.state.loading &&
+                <img src={loadingGif} alt=""/>
+            }
+            {
             (!this.state.editing || this.state.loading) &&
-            <Scroll>
-              <PageList 
-              todos={filteredPages}
-              editTodo={this.editTodo} 
-              deleteTodo={this.deleteTodo}
-              />
-            </Scroll>
-          }
+              <div className="ScrollMain">
+                <Scroll>
+                  <PageList
+                    todos={filteredPages}
+                    editTodo={this.editTodo} 
+                    deleteTodo={this.deleteTodo}
+                  />
+                </Scroll>
+              </div>
+            }
           </div>
           }
-            
-            
-        
       </div>
     );
   }
