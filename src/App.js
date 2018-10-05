@@ -1,16 +1,14 @@
 import axios from 'axios';
 import React, { Component } from 'react';
-import loadingGif from './loading.gif';
 import './App.css';
-import PageList from './components/ListItems/PageList';
-import Alert from "./components/Alert/Alert";
-import Scroll from "./components/Scroll/Scroll";
 import Particles from 'react-particles-js';
 import particlesOptions from "./ParticleOptions.js";
 import Navigation from "./components/Navigation/Navigation";
 import Signin from "./components/Signin/Signin";
-import Header from "./components/Header/Header"
-
+import AuxComp from "./AuxComp.js";
+import Title from "./components/Title/Title";
+import MainContent from "./components/MainContent/MainContent";
+import Footer from "./components/Footer/Footer";
 class App extends Component {
   constructor() {
     super();
@@ -23,7 +21,6 @@ class App extends Component {
       todos: [],
       loading: true,
       route:'sigin',
-      
     };
 
     this.apiUrl = 'https://5ba4f4fa328ae60014f30635.mockapi.io';
@@ -144,41 +141,23 @@ onRouteChange = () => {
 
     return (
       <div className="App">
-            <Particles className='particles' params={particlesOptions}
-            />
-            {this.state.route==="sigin" ? 
-            <Signin onRouteChange = {this.onRouteChange}/>:
-            <div className="">
-                <Navigation />
-                <Header
-                handleChange={this.handleChange}
-                handleSearch={this.handleSearch}
-                newTodo={this.state.newTodo}
-                editing = {this.state.editing}
-                updateTodo = {this.updateTodo}
-                addTodo = {this.addTodo}
-                searchEntry={this.state.searchEntry}
-                 />   
-            <Alert notification={this.state.notification}/>
-            {
-                this.state.loading &&
-                <img src={loadingGif} alt=""/>
-            }
-            {
-            (!this.state.editing || this.state.loading) &&
-              <div className="ScrollMain">
-                <Scroll>
-                  <PageList
-                    todos={filteredPages}
-                    editTodo={this.editTodo} 
-                    deleteTodo={this.deleteTodo}
-                  />
-                </Scroll>
-              </div>
-            }
-          </div>
+           <Particles className='particles' params={particlesOptions}/>
+          {this.state.route==="sigin" ? 
+            <Signin onRouteChange = {this.onRouteChange} />
+          :
+            <AuxComp>
+                  <Title />
+                  <Navigation />
+                  <MainContent 
+                      editing={this.state.editing} 
+                      loading={this.state.loading}
+                      todos={filteredPages}
+                      editTodo={this.editTodo} 
+                      deleteTodo={this.deleteTodo}/>
+                  <Footer notification={this.state.notification} />   
+            </AuxComp>
           }
-      </div>
+      </div>    
     );
   }
 }

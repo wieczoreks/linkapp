@@ -1,10 +1,14 @@
 import React from 'react';
-import "./Title.css";
+import Logo from "./Logo/Logo";
 
 const Title = (props) => {
  
 return (
-<p className="Title f3">PAGER</p>
+    <div className="header">
+        <p style={{fontFamily: 'SEGA LOGO FONT',color:"red"}}>PAGER</p>
+        <Logo />
+    </div>
+
 );
 }
  

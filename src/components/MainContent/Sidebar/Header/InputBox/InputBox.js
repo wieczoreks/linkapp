@@ -3,7 +3,7 @@ import React from 'react';
 const InputBox = (props) => {
  
 return (
-<div className="mv3">
+<div className="mv3 pa2">
 <label className="db fw6 lh-copy f5">InsertBox</label>
         
 <input

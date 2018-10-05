@@ -2,20 +2,24 @@ h1, h2 {
   font-family: 'SEGA LOGO FONT';
   color:#ff000f
 }
+* {
+  box-sizing: border-box;
+}
+li {
+ list-style: none;
+ margin:5px;
+ width:100%;
+}
+a {
+  padding:2px;
+}
 
 .App {
   text-align: center;
+  height:100vh;
+  background: transparent
 }
-.ScrollMain {
-  width:100%;
-  display: flex;
-  justify-content: center;
 
-}
-.center{
-display:flex;
-justify-content: center;
-}
 
 .particles {
   position:fixed;
@@ -26,6 +30,104 @@ justify-content: center;
   z-index:-1;
 }
 
+
+
+/* Header/logo Title */
+.header {
+  padding: 5px;
+  text-align: center;
+ font-size: 1.7rem;
+}
+
+.Logo {
+  position:absolute;
+  top:5px;
+  right:5px;
+}
+
+/* Style the top navigation bar */
+.navbar {
+  display: flex;
+  
+}
+
+/* Style the navigation bar links */
+.navbar a {
+  color:black;
+  font-family: 'SEGA LOGO FONT';
+  padding: 14px 20px;
+  text-decoration: none;
+  text-align: center;
+}
+
+/* Change color on hover */
+.navbar a:hover {
+  color: white
+}
+
+/* Column container */
+.row {  
+  display: flex;
+  align-items:stretch;
+  flex-wrap: wrap;
+}
+
+/* Create two unequal columns that sits next to each other */
+/* Sidebar/left column */
+.side {
+  flex: 20%;
+  padding: 20px;
+}
+
+/* Main column */
+.main {
+  flex: 80%;
+  padding: 20px;
+}
+.List {
+  margin:0 auto;
+  padding:5px 40px;
+  height:600px;
+  overflow-y:auto;
+  overflow-x:hidden;
+  width:95%;
+ }
+ .Item {
+   display:flex;
+   justify-content: space-between;
+   align-items:center;
+   flex-flow: row wrap;
+   padding:4px;
+   border:1px solid black;
+   width:100%
+ }
+
+
+/* Footer */
+.footer {
+  font-family:'SEGA LOGO FONT';
+  padding: 5px;
+  position: fixed;
+  bottom:0;
+  width:100%;
+  background: linear-gradient(to left, #d7d2cc, #304352);
+}
+
+@media screen and (max-width: 700px) {
+  .row, .navbar {   
+      flex-direction: column;
+  }
+  .List {
+    width:100%;
+    padding:5px 10px;
+  }
+  .Item {
+   flex-direction:column;
+    justify-content:flex-start;
+   
+    
+  }
+}
 @font-face {
   font-family: 'SEGA LOGO FONT';
   font-style: normal;
