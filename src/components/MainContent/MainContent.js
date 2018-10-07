@@ -3,6 +3,8 @@ import Sidebar from "./Sidebar/Sidebar";
 import Main from "./Main/Main";
 import PageList from "./Main/ListItems/PageList";
 import axios from 'axios';
+import AuxComp from '../../AuxComp';
+import Footer from "../Footer/Footer";
 
 class MainContent extends Component {
 constructor(props){
@@ -66,7 +68,7 @@ async addTodo () {
     todos: todos,
     newTodo: ''
   });
-  this.alert('Page added successfully.');
+  this.alert('`${todo.name} added successfully.`');
 }
 
 editTodo =(item) =>{
@@ -97,7 +99,7 @@ async updateTodo () {
     newTodo: '',
     searchEntry:''
   });
-  this.alert('Page updated successfully.');
+  this.alert(`${todo.name} updated successfully.`);
 }
 
 alert (notification) {
@@ -109,7 +111,7 @@ alert (notification) {
     this.setState({
       notification: null
     });
-  }, 2000);
+  }, 4000);
 }
 
 async deleteTodo(item) {
@@ -127,7 +129,8 @@ async deleteTodo(item) {
       return page.name.toLowerCase().includes(this.state.searchEntry.toLowerCase());
     })
     return (
-      <div className="row">
+      <AuxComp>
+                        <div className="row">
                           <Sidebar
                           handleChange={this.handleChange}
                           handleSearch={this.handleSearch}
@@ -147,6 +150,8 @@ async deleteTodo(item) {
                                   />
                           </Main>
                         </div>
+                        <Footer notification={this.state.notification}/> 
+      </AuxComp>
       );
       }
 } 

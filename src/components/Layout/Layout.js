@@ -13,7 +13,6 @@ return (
     <Title />
     <Navigation />
     <MainContent />              
-    <Footer /> 
 </AuxComp>
 );
 }

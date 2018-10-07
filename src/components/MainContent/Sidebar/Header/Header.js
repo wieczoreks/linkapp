@@ -7,7 +7,7 @@ const Header = (props) => {
  
 return (
  
-    <div className="Search br3 ba b--black-10  w-100 w-100-m w-100-l shadow-5"> 
+    <div className="pa2 br3 ba b--black-10  w-100 w-100-m w-100-l shadow-5"> 
       <SearchBox 
        handleSearch={props.handleSearch} 
        searchEntry={props.searchEntry}
