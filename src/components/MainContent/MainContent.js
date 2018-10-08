@@ -5,6 +5,7 @@ import PageList from "./Main/ListItems/PageList";
 import axios from 'axios';
 import AuxComp from '../../AuxComp';
 import Footer from "../Footer/Footer";
+import loadingGif from '../../loading5.gif';
 
 class MainContent extends Component {
 constructor(props){
@@ -140,14 +141,13 @@ async deleteTodo(item) {
                           addTodo = {this.addTodo}
                           searchEntry={this.state.searchEntry}
                            />
-                          <Main 
-                          editing={this.state.editing} 
-                          loading={this.state.loading}>
+                          <Main editing={this.state.editing} >
+                                {this.state.loading? <img src={loadingGif} alt=""/>:
                                 <PageList
                                   todos={filteredPages}
                                   editTodo={this.editTodo} 
                                   deleteTodo={this.deleteTodo}
-                                  />
+                                  />}
                           </Main>
                         </div>
                         <Footer notification={this.state.notification}/> 
