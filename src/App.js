@@ -10,28 +10,28 @@ class App extends Component {
   constructor() {
     super();
       this.state={
-        route:'sigin'
+        route:'signin'
     }
   }
 
-onRouteChange = () => {
-    this.setState({route:"home"})
+onRouteChange = (route) => {
+    this.setState({route:route})
 }
 
   render() {
- 
+    let pageContent = null;
+
+    if(this.state.route =="home"){
+      pageContent  = <Layout onRouteChange={this.onRouteChange}/>
+    }
+    if(this.state.route === "signin")
+      pageContent = <Signin onRouteChange = {this.onRouteChange} />
    
 
     return (
       <div className="App">
-           <Particles className='particles' params={particlesOptions}/>
-          {this.state.route==="sigin" ? 
-            <Signin onRouteChange = {this.onRouteChange} />
-          :<Layout />
-           
-             
-
-          }
+          <Particles className='particles' params={particlesOptions}/>
+          {pageContent}
       </div>    
     );
   }

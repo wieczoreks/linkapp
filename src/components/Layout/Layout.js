@@ -11,7 +11,7 @@ const Layout = (props) => {
 return (
 <AuxComp>
     <Title />
-    <Navigation />
+    <Navigation onRouteChange={props.onRouteChange}/>
     <MainContent />              
 </AuxComp>
 );

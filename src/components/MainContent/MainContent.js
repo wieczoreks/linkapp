@@ -63,12 +63,12 @@ async addTodo () {
 
   const todos = this.state.todos;
   todos.push(response.data);
-
+  const todo = response.data.name
   this.setState({
     todos: todos,
     newTodo: ''
   });
-  this.alert('`${todo.name} added successfully.`');
+  this.alert(`${todo} added successfully.`);
 }
 
 editTodo =(item) =>{

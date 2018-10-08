@@ -52,7 +52,7 @@ a {
 }
 
 /* Style the navigation bar links */
-.navbar a {
+.navbar >div {
   color:black;
   font-family: 'SEGA LOGO FONT';
   padding: 14px 20px;
@@ -61,7 +61,7 @@ a {
 }
 
 /* Change color on hover */
-.navbar a:hover {
+.navbar >div:hover {
   color: white
 }
 
@@ -88,7 +88,7 @@ a {
 .List {
   margin:0 auto;
   padding:5px 40px;
-  height:500px;
+  height:600px;
   overflow-y:auto;
   overflow-x:hidden;
   width:95%;

@@ -6,7 +6,8 @@ const Footer = (props) => {
 return (
 <div className="footer shadow-2">
     
-    <Alert notification ={props.notification} />
+    <Alert 
+    notification ={props.notification} />
     
 </div>
 );

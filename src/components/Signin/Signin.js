@@ -29,7 +29,7 @@ return (
         </fieldset>
         <div className="">
             <input 
-            onClick={props.onRouteChange} 
+            onClick={()=>props.onRouteChange("home")} 
             className="b ph3 pv2 input-reset ba bw1 b--black bg-transparent grow pointer f6 dib" 
             type="submit" 
             value="Sign in" 
