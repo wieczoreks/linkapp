@@ -5,6 +5,7 @@ import Particles from 'react-particles-js';
 import particlesOptions from "./ParticleOptions.js";
 import Layout from "./components/Layout/Layout"
 import Signin from "./components/Signin/Signin";
+import Register from "./components/Register/Register";
 
 class App extends Component {
   constructor() {
@@ -20,13 +21,21 @@ onRouteChange = (route) => {
 
   render() {
     let pageContent = null;
+ switch(this.state.route){
+   case "home":
+   pageContent  = <Layout onRouteChange={this.onRouteChange}/>;
+   break;
+   case "signin":
+   pageContent = <Signin onRouteChange = {this.onRouteChange} />;
+   break;
+   case "register":
+   pageContent = <Register onRouteChange = {this.onRouteChange} />;
+   break;
+   default:
+   pageContent = <Signin onRouteChange = {this.onRouteChange} />;
+ }
+    
 
-    if(this.state.route =="home"){
-      pageContent  = <Layout onRouteChange={this.onRouteChange}/>
-    }
-    if(this.state.route === "signin")
-      pageContent = <Signin onRouteChange = {this.onRouteChange} />
-   
 
     return (
       <div className="App">
