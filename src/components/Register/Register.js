@@ -7,12 +7,17 @@ class Register extends Component {
           email: '',
           password: '',
           name: '',
-          error:''
+          error:'',
+          code:''
         }
       }
-    componentDidMount(){
 
-    }
+      handleCode=(event)=>{
+        this.setState({
+          code:event.target.value
+        })
+      }
+
       onNameChange = (event) => {
         this.setState({name: event.target.value})
       }
@@ -33,6 +38,7 @@ class Register extends Component {
            name:this.state.name,
            email:this.state.email,
            password:this.state.password,
+           code:this.state.code
          })
        }).then(response=> response.json()).then(user=>{
          if(user.id){
@@ -79,6 +85,16 @@ class Register extends Component {
                       name="password"  
                       id="password"
                       onChange={this.onPasswordChange}
+                       />
+                    </div>
+                    <div className="mv3">
+                      <label className="db fw6 lh-copy f6" htmlFor="password">Password</label>
+                      <input 
+                      className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
+                      type="text" 
+                      name="code"  
+                      id="code"
+                      onChange={this.handleCode}
                        />
                     </div>
                 </fieldset>
