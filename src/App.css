@@ -35,20 +35,19 @@ a {
 /* Header/logo Title */
 .header {
   padding: 5px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
   text-align: center;
- font-size: 1.7rem;
+  font-size: 1.7rem;
 }
 
-.Logo {
-  position:absolute;
-  top:5px;
-  right:5px;
-}
+
 
 /* Style the top navigation bar */
 .navbar {
   display: flex;
-  
+  justify-content:space-between
 }
 
 /* Style the navigation bar links */
@@ -76,13 +75,13 @@ a {
 /* Create two unequal columns that sits next to each other */
 /* Sidebar/left column */
 .side {
-  flex: 20%;
+  flex: 30%;
   padding: 20px;
 }
 
 /* Main column */
 .main {
-  flex: 80%;
+  flex: 70%;
   padding: 20px;
 }
 .List {
@@ -95,9 +94,9 @@ a {
  }
  .Item {
    display:flex;
-   justify-content: space-between;
-   align-items:center;
-   flex-flow: row wrap;
+   align-items: center;
+   justify-content: center;
+   flex-flow: column wrap;
    padding:4px;
    border:1px solid black;
    width:100%

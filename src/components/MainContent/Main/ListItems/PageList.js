@@ -8,7 +8,7 @@ const PageList = (props) => {
 
   const  list = props.todos.map((item, index) => {
     return <ListItem
-      key={item.id}
+      key={item.pid}
       item={item}
       editTodo={()=>props.editTodo(item)}
       deleteTodo={()=>props.deleteTodo(item)}
@@ -17,7 +17,7 @@ const PageList = (props) => {
 
 return (
 
-    <ul className = "List shadow-2">
+    <ul className = "List">
               {list}
     </ul>
   

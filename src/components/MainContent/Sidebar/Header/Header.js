@@ -14,12 +14,14 @@ return (
       />
       <InputBox 
       handleChange={props.handleChange}
-      newTodo ={props.newTodo}/>                          
+      newTodo ={props.newTodo}
+      />                          
       
       <button
-      onClick={props.editing ? props.updateTodo : props.addTodo }
-      className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
+        onClick={props.editing ? props.updateTodo : props.addTodo }
+        className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib"
       >{props.editing?"Update page":"Add page"}</button>
+         
     </div>
 
 

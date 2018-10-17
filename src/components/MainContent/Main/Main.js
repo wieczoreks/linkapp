@@ -1,13 +1,21 @@
 import React from 'react';
+import loadingGif from '../../../loading5.gif';
+import PageList from "./ListItems/PageList";
 
+const Main = (props)=>  {
 
-const Main = (props) => {
-
-return (
-    <div className="main">
-    {props.children}
-    </div>
-);
+    
+    return (
+        <div className="main">
+            {props.loading  ? <img src={loadingGif} alt="" />:props.editing ? null:
+                <PageList 
+                todos={props.todos} 
+                editTodo={props.editTodo} 
+                deleteTodo={props.deleteTodo} />}
+        </div>
+    );
 }
+
+
  
 export default Main;

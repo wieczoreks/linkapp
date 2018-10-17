@@ -9,7 +9,6 @@ return (
     <div style={{fontFamily: 'SEGA LOGO FONT'}}
       onClick={() => props.onRouteChange("signin")} 
     >Sign Out</div>
-      
     </div>
 
 );

@@ -1,11 +1,9 @@
 import React,{Component} from 'react';
 import Sidebar from "./Sidebar/Sidebar";
 import Main from "./Main/Main";
-import PageList from "./Main/ListItems/PageList";
 import axios from 'axios';
 import AuxComp from '../../AuxComp';
 import Footer from "../Footer/Footer";
-import loadingGif from '../../loading5.gif';
 
 class MainContent extends Component {
 constructor(props){
@@ -18,27 +16,32 @@ super(props)
     notification: null,
     todos: [],
     loading: true,
+    startTime:'',
+    endTime:'',
+    timeTotal:''
   };
 
-  this.apiUrl = 'https://5ba4f4fa328ae60014f30635.mockapi.io';
+  //this.apiUrl = 'http://5ba4f4fa328ae60014f30635.mockapi.io';
+  this.apiUrl = 'https://infinite-chamber-56013.herokuapp.com/'
   this.deleteTodo = this.deleteTodo.bind(this);
   this.addTodo = this.addTodo.bind(this);
   this.updateTodo = this.updateTodo.bind(this);
   this.handleChange=this.handleChange.bind(this);
   this.handleSearch=this.handleSearch.bind(this);
-  
+  this.checkAllPages= this.checkAllPages.bind(this)
   this.alert = this.alert.bind(this)
 }
 
 async componentDidMount() {
-  const response = await axios.get(`${this.apiUrl}/todos`);
+  console.log("DID MOUNT")
+  const response = await axios.get(`${this.apiUrl}/pages`);
+  
   setTimeout(() => {
     this.setState({
       todos: response.data,
-      loading: false,
-      
+      loading: false
     });
-  }, 1000);
+  }, 2000);  
 }
 
 handleChange(event) {
@@ -51,20 +54,47 @@ handleSearch(event){
   this.setState({
     searchEntry: event.target.value
   });
-  
+}
 
+
+
+async checkAllPages () {
+
+  this.setState({
+     startTime: new Date(),
+     loading: true
+  });
+ 
+  const response = await axios.get(`${this.apiUrl}/refresh`);
+  
+    if(response) {
+      this.setState({
+        todos: response.data,
+        loading: false,
+        endTime:new Date()
+      });
+    }
+    this.checkTime()
+    this.alert(`Updated successfully.`);
+}
+
+checkTime = () => {
+  const time = (this.state.endTime-this.state.startTime)/1000;
+  console.log(time)
+  this.setState({
+    timeTotal:time
+  })
+  this.alert(`It took ${this.state.timeTotal}`);
 }
 
 async addTodo () {
-
-  const response = await axios.post(`${this.apiUrl}/todos`, {
-    name: this.state.newTodo
+  const response = await axios.post(`${this.apiUrl}/pages`, {
+    link: this.state.newTodo,
+    tvalue:0
   });
-
-
   const todos = this.state.todos;
   todos.push(response.data);
-  const todo = response.data.name
+  const todo = response.data.link
   this.setState({
     todos: todos,
     newTodo: ''
@@ -75,21 +105,20 @@ async addTodo () {
 editTodo =(item) =>{
   const todos = this.state.todos;
   const index = todos.indexOf(item);
-
+  console.log(item);
+  console.log(index);
   const todo = this.state.todos[index];
-  
-  
   this.setState({
     editing: true,
-    newTodo: todo.name,
+    newTodo: todo.link,
     editingIndex: index
   });
 }
 
 async updateTodo () {
   const todo = this.state.todos[this.state.editingIndex];
-  const response = await axios.put(`${this.apiUrl}/todos/${todo.id}`, {
-    name: this.state.newTodo
+  const response = await axios.put(`${this.apiUrl}/pages/${todo.pid}`, {
+    link: this.state.newTodo
   });
   const todos = this.state.todos;
   todos[this.state.editingIndex] = response.data;
@@ -100,7 +129,7 @@ async updateTodo () {
     newTodo: '',
     searchEntry:''
   });
-  this.alert(`${todo.name} updated successfully.`);
+  this.alert(`${todo.link} updated successfully.`);
 }
 
 alert (notification) {
@@ -119,16 +148,17 @@ async deleteTodo(item) {
   const todos = this.state.todos;
   const index = todos.indexOf(item);
   const todo = todos[index];
-  await axios.delete(`${this.apiUrl}/todos/${todo.id}`);
+  await axios.delete(`${this.apiUrl}/pages/${todo.pid}`);
   delete todos[index];
   this.setState({ todos });
-  this.alert(`${todo.name} deleted successfully.`);
+  this.alert(`${todo.link} deleted successfully.`);
 }
   render(){
-
+    console.log("RENDER")
     const filteredPages = this.state.todos.filter(page=>{
-      return page.name.toLowerCase().includes(this.state.searchEntry.toLowerCase());
+        return page.link.toLowerCase().includes(this.state.searchEntry.toLowerCase());
     })
+  
     return (
       <AuxComp>
                         <div className="row">
@@ -140,21 +170,27 @@ async deleteTodo(item) {
                           updateTodo = {this.updateTodo}
                           addTodo = {this.addTodo}
                           searchEntry={this.state.searchEntry}
+                          checkallPages={this.checkAllPages}
                            />
-                          <Main editing={this.state.editing} >
-                                {this.state.loading? <img src={loadingGif} alt=""/>:
-                                <PageList
-                                  todos={filteredPages}
-                                  editTodo={this.editTodo} 
-                                  deleteTodo={this.deleteTodo}
-                                  />}
-                          </Main>
+                          <Main 
+                          loading={this.state.loading}
+                          todos={filteredPages} 
+                          editTodo={this.editTodo}
+                          deleteTodo={this.deleteTodo}
+                          editing={this.state.editing}
+                          />
+                        
+                                
+                  
                         </div>
                         <Footer notification={this.state.notification}/> 
       </AuxComp>
-      );
-      }
-} 
+    );
+}
+}
+
+      
+
 
  
 export default MainContent;

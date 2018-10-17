@@ -11,9 +11,28 @@ class App extends Component {
   constructor() {
     super();
       this.state={
-        route:'signin'
+        route:'signin',
+        user:{
+          id:'', 
+          name:"", 
+          email:"", 
+          entries:0, 
+          joined:""
+        }
     }
   }
+loadUser = (user) => {
+  
+  this.setState({user:{
+    id:user.id, 
+    name:user.name, 
+    email:user.email,
+    entries:user.entries,
+    joined:user.joined
+}}) 
+
+}
+
 
 onRouteChange = (route) => {
     this.setState({route:route})
@@ -23,16 +42,16 @@ onRouteChange = (route) => {
     let pageContent = null;
  switch(this.state.route){
    case "home":
-   pageContent  = <Layout onRouteChange={this.onRouteChange}/>;
+   pageContent  = <Layout userName={this.state.user.name} onRouteChange={this.onRouteChange}/>;
    break;
    case "signin":
-   pageContent = <Signin onRouteChange = {this.onRouteChange} />;
+   pageContent = <Signin onRouteChange = {this.onRouteChange } loadUser={this.loadUser}/>;
    break;
    case "register":
-   pageContent = <Register onRouteChange = {this.onRouteChange} />;
+   pageContent = <Register onRouteChange = {this.onRouteChange} loadUser={this.loadUser}/>;
    break;
    default:
-   pageContent = <Signin onRouteChange = {this.onRouteChange} />;
+   pageContent = <Signin onRouteChange = {this.onRouteChange} loadUser={this.loadUser} />;
  }
     
 

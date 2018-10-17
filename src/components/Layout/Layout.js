@@ -3,14 +3,14 @@ import AuxComp from "../../AuxComp";
 import Title from "../Title/Title";
 import Navigation from "../Navigation/Navigation";
 import MainContent from "../MainContent/MainContent";
-import Footer from "../Footer/Footer";
+
 
 
 const Layout = (props) => {
  
 return (
 <AuxComp>
-    <Title />
+    <Title userName={props.userName}/>
     <Navigation onRouteChange={props.onRouteChange}/>
     <MainContent />              
 </AuxComp>
