@@ -69,6 +69,7 @@ async checkAllPages () {
         endTime:new Date()
       });
     }
+    console.log(response.data)
     this.checkTime()
     this.alert(`Updated successfully.`);
 }
