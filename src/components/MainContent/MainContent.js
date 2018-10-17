@@ -33,9 +33,7 @@ super(props)
 }
 
 async componentDidMount() {
-  console.log("DID MOUNT")
   const response = await axios.get(`${this.apiUrl}/pages`);
-  
   setTimeout(() => {
     this.setState({
       todos: response.data,
@@ -43,7 +41,6 @@ async componentDidMount() {
     });
   }, 2000);  
 }
-
 handleChange(event) {
   this.setState({
     newTodo: event.target.value,
@@ -55,8 +52,6 @@ handleSearch(event){
     searchEntry: event.target.value
   });
 }
-
-
 
 async checkAllPages () {
 
@@ -105,8 +100,6 @@ async addTodo () {
 editTodo =(item) =>{
   const todos = this.state.todos;
   const index = todos.indexOf(item);
-  console.log(item);
-  console.log(index);
   const todo = this.state.todos[index];
   this.setState({
     editing: true,
@@ -154,11 +147,9 @@ async deleteTodo(item) {
   this.alert(`${todo.link} deleted successfully.`);
 }
   render(){
-    console.log("RENDER")
     const filteredPages = this.state.todos.filter(page=>{
         return page.link.toLowerCase().includes(this.state.searchEntry.toLowerCase());
     })
-  
     return (
       <AuxComp>
                         <div className="row">
@@ -179,18 +170,10 @@ async deleteTodo(item) {
                           deleteTodo={this.deleteTodo}
                           editing={this.state.editing}
                           />
-                        
-                                
-                  
                         </div>
                         <Footer notification={this.state.notification}/> 
       </AuxComp>
     );
 }
 }
-
-      
-
-
- 
 export default MainContent;
