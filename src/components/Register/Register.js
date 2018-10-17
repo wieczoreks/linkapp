@@ -26,7 +26,7 @@ class Register extends Component {
       }
 
       onSubmitRegister = () => {
-       fetch('https://infinite-chamber-56013.herokuapp.com/register',{
+       fetch('https://wieczoreksbackend.herokuapp.com/register',{
          method:"post",
          headers:{"Content-Type":"application/json"},
          body:JSON.stringify({
@@ -97,7 +97,7 @@ class Register extends Component {
                     className="f6 link dim black db pointer">Sign in</p>
                   
                 </div>
-                <div style={{color:"red"}}>{this.state.error}</div>
+                    <div style={{color:"red"}}>{this.state.error}</div>
                 </div>
             </main>
             </article>
