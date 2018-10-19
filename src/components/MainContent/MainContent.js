@@ -23,7 +23,7 @@ super(props)
   };
 
   //this.apiUrl = 'http://5ba4f4fa328ae60014f30635.mockapi.io';
-  this.apiUrl = 'http://localhost:3001'
+  this.apiUrl = 'https://wieczoreksbackend.herokuapp.com'
   this.deleteTodo = this.deleteTodo.bind(this);
   this.addTodo = this.addTodo.bind(this);
   this.updateTodo = this.updateTodo.bind(this);
