@@ -11,7 +11,10 @@ const Main = (props)=>  {
                 <PageList 
                 todos={props.todos} 
                 editTodo={props.editTodo} 
-                deleteTodo={props.deleteTodo} />}
+                deleteTodo={props.deleteTodo}
+                refresh = {props.refresh}
+                
+                 />}
         </div>
     );
 }

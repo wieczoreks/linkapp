@@ -6,9 +6,9 @@ const Navigation = (props) => {
  
 return (
   <div className="navbar shadow-2">
-    <div style={{fontFamily: 'SEGA LOGO FONT'}}
-      onClick={() => props.onRouteChange("signin")} 
+    <div onClick={() => props.onRouteChange("signin")} 
     >Sign Out</div>
+    <div style={{color:"red"}}>PAGER</div>
     </div>
 
 );

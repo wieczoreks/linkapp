@@ -18,11 +18,12 @@ super(props)
     loading: true,
     startTime:'',
     endTime:'',
-    timeTotal:''
+    timeTotal:'',
+    
   };
 
   //this.apiUrl = 'http://5ba4f4fa328ae60014f30635.mockapi.io';
-  this.apiUrl = 'https://wieczoreksbackend.herokuapp.com'
+  this.apiUrl = 'http://localhost:3001'
   this.deleteTodo = this.deleteTodo.bind(this);
   this.addTodo = this.addTodo.bind(this);
   this.updateTodo = this.updateTodo.bind(this);
@@ -62,17 +63,34 @@ async checkAllPages () {
  
   const response = await axios.get(`${this.apiUrl}/refresh`);
   
-    if(response) {
+    if(response.data) {
       this.setState({
         todos: response.data,
         loading: false,
         endTime:new Date()
       });
     }
-    console.log(response.data)
     this.checkTime()
     this.alert(`Updated successfully.`);
 }
+
+
+setRefreshIndex = (item) =>{
+  const todos = this.state.todos;
+  const index = todos.indexOf(item);
+  const todo = todos[index]
+  axios.put(`${this.apiUrl}/refresh/${item.pid}`,{
+     link:todo.link, 
+     }).then(resp =>{
+      todos[index] = resp.data
+      this.setState({
+        todos:todos
+      })
+      this.alert(`${resp.data.link} updated successfully.`);
+     });
+  }
+
+
 
 checkTime = () => {
   const time = (this.state.endTime-this.state.startTime)/1000;
@@ -101,7 +119,9 @@ async addTodo () {
 editTodo =(item) =>{
   const todos = this.state.todos;
   const index = todos.indexOf(item);
+ 
   const todo = this.state.todos[index];
+  
   this.setState({
     editing: true,
     newTodo: todo.link,
@@ -135,7 +155,7 @@ alert (notification) {
     this.setState({
       notification: null
     });
-  }, 4000);
+  }, 5000);
 }
 
 async deleteTodo(item) {
@@ -160,6 +180,7 @@ async deleteTodo(item) {
                           newTodo={this.state.newTodo}
                           editing = {this.state.editing}
                           updateTodo = {this.updateTodo}
+                          
                           addTodo = {this.addTodo}
                           searchEntry={this.state.searchEntry}
                           checkallPages={this.checkAllPages}
@@ -170,6 +191,8 @@ async deleteTodo(item) {
                           editTodo={this.editTodo}
                           deleteTodo={this.deleteTodo}
                           editing={this.state.editing}
+                          refresh={this.setRefreshIndex}
+                          
                           />
                         </div>
                         <Footer notification={this.state.notification}/> 

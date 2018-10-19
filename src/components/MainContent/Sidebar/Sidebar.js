@@ -17,7 +17,9 @@ return (
         searchEntry={props.searchEntry}
        
         />                    
-        <Refresh checkallPages={props.checkallPages} />
+        <Refresh 
+        checkallPages={props.checkallPages}
+         />
 </div>
 
 );
